@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "express": "^4.18.2",
+    "global": "^4.4.0",
+    "bcrypt": "^5.1.1",
+		"dotenv": "^16.3.1",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^8.0.0",
+		"morgan": "^1.10.0",
+		"nodemailer": "^6.9.7",
+		"nodemon": "^3.0.1",
+		"slugify": "^1.6.6",
+		"validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "scripts": {
+      "dev": "concurrently 'vite' \"nodemon server.js\"",
+      "build": "vite build",
+      "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+      "preview": "vite preview"
+  },
+  "name": "Gokturk",
+  "version": "1.0.0",
+  "description": "Project for COMP229 GROUP 6",
+  "main": "index.js",
+  "repository": "https://github.com/fmmariz/Gokturk-Comp229-Fall2023.git",
+  "author": "GROUP 6",
+  "license": "MIT"
+}
