@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
-dotenv.config({ path: './../config.env' });
-const app = require('./server/app');
+dotenv.config({ path: './../server/config.env' });
+const app = require('./app');
 const mongoose = require('mongoose');
 const DB = process.env.DATABASE.replace(
 	'<PASSWORD>',
@@ -11,7 +11,8 @@ mongoose.set('strictQuery', false);
 
 (async () => {
 	try {
-		const con = await mongoose.connect(DB, {
+		const con = await mongoose.connect(
+			DB, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});

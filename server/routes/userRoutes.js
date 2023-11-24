@@ -9,8 +9,8 @@ const { GetAllUsers, getUser, DeleteUser, UpdateUser, CreateUser } =
 userRouter.post('/signup', signUp);
 userRouter.post('/login', login);
 // Routes for the User resource
-
-userRouter.use(protect);
+// Temporarily disabled.
+// userRouter.use(protect);
 
 // Route to get a list of all users
 userRouter.get('/', GetAllUsers);

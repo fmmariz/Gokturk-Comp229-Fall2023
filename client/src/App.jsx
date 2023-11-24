@@ -14,7 +14,7 @@ const App = () => {
 
   return ( 
     <Router>
-        <MainRouter />
+       <MainRouter />
     </Router>
   );
 };

@@ -1,10 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-
-const { PORT = 3000 } = process.env;
-
+  
 export default defineConfig({
   plugins: [react({
     jsxRuntime: 'classic' // Add this line
@@ -13,8 +9,9 @@ export default defineConfig({
 server: {
   proxy: {
     '/api': {
-      target: `http://localhost:${PORT}`,
-      changeOrigin: true
+      target: `http://localhost:3000`,
+      changeOrigin: true,
+      secure: false
     },
   },
 },

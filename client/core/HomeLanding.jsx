@@ -1,9 +1,12 @@
 import React from 'react';
-import unicornbikeImg from './../assets/images/gokturk_logo.jpg';
+import NavigationBar from '../src/components/NavigationBar';
+
+
 
 export default function Home() {
-    return (
-        <div>
-            <img src={unicornbikeImg} alt="Logo" />
-        </div>);
+    return (<>
+        <NavigationBar/>
+        <h6>Home Page</h6>
+        </>
+        );
 }
