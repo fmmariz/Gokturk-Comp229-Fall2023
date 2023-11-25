@@ -30,7 +30,14 @@ export default function () {
     }
 
     const buttons = {
-        marginTop: 3
+        marginTop: 3,
+        backgroundColor: 'black',
+        '&:hover':{
+            backgroundColor: 'grey',
+            boxShadow: 'none',
+            borderColor: 'white',
+            color: 'orange'
+        }
     }
 
     return (
