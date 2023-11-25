@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import Icon from '@material-ui/core/Icon'
 import { makeStyles } from '@material-ui/core/styles'
 import { create } from './api-user.js'
 import Dialog from '@material-ui/core/Dialog'
@@ -19,9 +18,9 @@ import NavigationBar from '../src/components/NavigationBar.jsx'
 export default function Signup() {
   const [values, setValues] = useState({
     name: '',
-    password: '',
-    confirmPassword: '',
     email: '',
+    password: '',
+    passwordConfirm: '',
     open: false,
     error: ''
   })
@@ -35,8 +34,9 @@ export default function Signup() {
       name: values.name || undefined,
       email: values.email || undefined,
       password: values.password || undefined,
-      passwordConfirm: values.confirmPassword || undefined
+      passwordConfirm: values.passwordConfirm || undefined
     }
+    console.log(user);
     create(user).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error })
@@ -45,13 +45,14 @@ export default function Signup() {
       }
     })
   }
+
+  document.title = "GOKTURK - Sign Up"
+
   return (<div>
     <NavigationBar />
     <Card >
       <CardContent>
-        <Typography variant="h6" >
-          Sign Up
-        </Typography>
+        <h6>Sign Up</h6>
         <TextField
           id="name"
           label="Name"
@@ -71,13 +72,12 @@ export default function Signup() {
           value={values.password}
           onChange={handleChange('password')}
           margin="normal" /><br />
-        <TextField id="confirmPassword"
+        <TextField id="passwordConfirm"
           type="password"
           label="Confirm your Password"
-          value={values.confirmPassword}
-          onChange={handleChange('confirmPassword')}
+          value={values.passwordConfirm}
+          onChange={handleChange('passwordConfirm')}
           margin="normal" /><br />
-
       </CardContent>
       <CardActions>
         <Button

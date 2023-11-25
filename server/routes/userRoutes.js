@@ -7,10 +7,10 @@ const { GetAllUsers, getUser, DeleteUser, UpdateUser, CreateUser } =
 	userController;
 
 userRouter.post('/signup', signUp);
+
 userRouter.post('/login', login);
 // Routes for the User resource
-// Temporarily disabled.
-// userRouter.use(protect);
+userRouter.use(protect);
 
 // Route to get a list of all users
 userRouter.get('/', GetAllUsers);
