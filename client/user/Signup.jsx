@@ -46,7 +46,7 @@ export default function Signup() {
     })
   }
 
-  document.title = "GOKTURK - Sign Up"
+  document.title = "GOKTURKS - Sign Up"
 
   return (<div>
     <NavigationBar />

@@ -17,30 +17,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import auth from '../../auth/auth-helper';
+import { useState } from 'react';
 import gokturkLogo from './../../assets/images/gokturk_logo.jpg';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
-
-const pages = ['User List', 'Product List'];
-const settingsLogged = ['Profile', 'Account', 'Logout'];
-const settingsNotLogged = ['Sign Up', 'Log In'];
-const locationsDict = {
-  'User List': 'listusers',
-  'Product List': 'listproducts',
-  'Sign Up': "signup",
-  'Log In': "login",
-  'Profile': "profile",
-}
-const loggedIn = false;
-var shownSettings = [];
-var topRightIcon = null;
-if (loggedIn) {
-  shownSettings = settingsLogged;
-  topRightIcon = <Avatar alt="Username" src="/path/to/user" />;
-} else {
-  shownSettings = settingsNotLogged;
-  topRightIcon = <AccountCircleIcon style={{ color: 'black' }} />;
-}
 
 
 function NavigationBar() {
@@ -58,9 +39,46 @@ function NavigationBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (action) => {
     setAnchorElUser(null);
   };
+
+  const pages = ['User List', 'Product List'];
+  const settingsLogged = ['Profile', 'Logout'];
+  const settingsNotLogged = ['Sign Up', 'Log In'];
+  const locationsDict = {
+    'User List': 'listusers',
+    'Product List': 'listproducts',
+    'Sign Up': "signup",
+    'Log In': "signin",
+    'Profile': "profile",
+  }
+  let [hasLoggedOut, setHasLoggedOut] = useState(false);
+  var shownSettings = [];
+  var topRightIcon = null;
+  var loggedIn = auth.isAuthenticated()
+  if (loggedIn) {
+    shownSettings = settingsLogged;
+    topRightIcon = <Avatar alt="Username" src="/path/to/user" />;
+  } else {
+    shownSettings = settingsNotLogged;
+    topRightIcon = <AccountCircleIcon style={{ color: 'black' }} />;
+  }
+
+  const logOut = () => {
+    console.log("Trying to log out")
+    auth.clearJWT(
+      () =>{
+        console.log("Trying to log out")
+        setHasLoggedOut(true)
+      }
+    );
+  }
+
+  if (hasLoggedOut) {
+    console.log("Moving to main")
+    return (<Redirect to="./" />)
+  }
 
   return (
     <AppBar position="static"
@@ -90,7 +108,7 @@ function NavigationBar() {
             }}
           >
 
-            GOKTURK
+            GOKTURKS
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -194,12 +212,18 @@ function NavigationBar() {
 
             >
               {shownSettings.map((setting) => (
-                <MenuItem key={setting}
+                (setting!='Logout') ? ( 
+                  <MenuItem key={setting}
                   onClick={handleCloseUserMenu}
-                  component={Link} to={locationsDict[setting]}
-                >
+                  component={Link} to={locationsDict[setting]}>
                   <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                </MenuItem>)
+                 : (<MenuItem key={setting}
+                 onClick={logOut}>
+                 <Typography textAlign="center">{setting}</Typography>
+                 </MenuItem>)
+                
+                
               ))}
             </Menu>
           </Box>

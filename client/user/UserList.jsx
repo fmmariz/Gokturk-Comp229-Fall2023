@@ -38,6 +38,7 @@ export default function UserList() {
 
   return (
     <>
+
     <NavigationBar />
     <ul style={listStyle}>
       {userList.map((user) =>
@@ -47,6 +48,7 @@ export default function UserList() {
       </CardContent>
     </Card>)}
     </ul>
+
     </>
   )
 }

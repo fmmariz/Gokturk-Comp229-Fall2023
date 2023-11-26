@@ -14,12 +14,34 @@ const create = async (user) => {
       console.log(err)
     }
   }
+
+  const signin = async (user) => {
+    try {
+        let response = await fetch('/api/v1/users/login', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(user)
+        })
+      return await response.json()
+    } catch(err) {
+      console.log(err)
+    }
+  }
   
-  const list = async (signal) => {
+  // Modified to also send authentication token of JWT
+  const list = async (credentials, signal) => {
     try {
       let response = await fetch('/api/v1/users', {
         method: 'GET',
         signal: signal,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + credentials.t
+        }
       })
       return await response.json()
     } catch(err) {
@@ -29,7 +51,7 @@ const create = async (user) => {
   
   const read = async (params, credentials, signal) => {
     try {
-      let response = await fetch('/users/' + params.userId, {
+      let response = await fetch('/api/v1/users/' + params.userId, {
         method: 'GET',
         signal: signal,
         headers: {
