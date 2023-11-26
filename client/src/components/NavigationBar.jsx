@@ -68,7 +68,7 @@ function NavigationBar() {
   const logOut = () => {
     console.log("Trying to log out")
     auth.clearJWT(
-      () =>{
+      () => {
         console.log("Trying to log out")
         setHasLoggedOut(true)
       }
@@ -80,6 +80,134 @@ function NavigationBar() {
     return (<Redirect to="./" />)
   }
 
+  const getTopInfo = () => {
+    if(loggedIn){
+    return (<><a href="/landing">
+      <img src={gokturkLogo} alt="Logo" height="50px" width="50px" />
+    </a>
+      <Typography
+        variant="h6"
+        noWrap
+        marginLeft={"10px"}
+        component="a"
+        href="/landing"
+        sx={{
+          mr: 2,
+          display: { xs: 'none', md: 'flex' },
+          fontFamily: 'monospace',
+          fontWeight: 700,
+          letterSpacing: '.3rem',
+          color: 'black',
+          textDecoration: 'none',
+        }}
+      >
+
+        GOKTURKS
+      </Typography>
+
+      <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleOpenNavMenu}
+          color="inherit"
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorElNav}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={Boolean(anchorElNav)}
+          onClose={handleCloseNavMenu}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+          }}
+        >
+          {pages.map((page) => (
+            <MenuItem key={page} onClick={handleCloseNavMenu}
+            >
+              <Typography textAlign="center" style={{ color: 'black' }}>{page}</Typography>
+            </MenuItem>
+          ))}
+        </Menu>
+      </Box>
+      <Typography
+        variant="h5"
+        noWrap
+        component="a"
+        href="#app-bar-with-responsive-menu"
+        sx={{
+          mr: 2,
+          display: { xs: 'flex', md: 'none' },
+          flexGrow: 1,
+          fontFamily: 'monospace',
+          fontWeight: 700,
+          letterSpacing: '.3rem',
+          color: 'black',
+          textDecoration: 'none',
+        }}
+      >
+        GOKTURK
+      </Typography>
+      {/* This is the part that involves the list of pages on the top; */}
+
+      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+        {pages.map((page) => (
+          <Button
+            key={page}
+            onClick={handleCloseNavMenu}
+            component={Link} to={locationsDict[page]}
+            sx={{
+              my: 2, color: 'black', display: 'block',
+              backgroundColor: 'white',
+              '&:hover': {
+                backgroundColor: 'black',
+                color: 'white'
+              }
+            }}
+          >
+            {page}
+          </Button>
+        ))}
+      </Box></>)
+    }else{
+      return (<Box flexGrow={1} sx={{alignItems:'center', justifyContent:'center', display:'flex', flexDirection:'row'}}>
+      <a href="/landing">
+      <img src={gokturkLogo} alt="Logo" height="50px" width="50px" />
+    </a>
+      <Typography
+        variant="h6"
+        noWrap
+        marginLeft={"10px"}
+        component="a"
+        href="/landing"
+        sx={{
+          mr: 2,
+          display: { xs: 'none', md: 'flex' },
+          fontFamily: 'monospace',
+          fontWeight: 700,
+          letterSpacing: '.3rem',
+          color: 'black',
+          textDecoration: 'none',
+        }}
+      >
+
+        GOKTURKS
+      </Typography></Box>)
+    }
+  }
+
   return (
     <AppBar position="static"
       sx={{
@@ -87,106 +215,9 @@ function NavigationBar() {
         color: "black"
       }}>
       <Container maxWidth="xl">
+
         <Toolbar disableGutters>
-          <a href="/landing">
-            <img src={gokturkLogo} alt="Logo" height="50px" width="50px" />
-          </a>
-          <Typography
-            variant="h6"
-            noWrap
-            marginLeft={"10px"}
-            component="a"
-            href="/landing"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'black',
-              textDecoration: 'none',
-            }}
-          >
-
-            GOKTURKS
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}
-                >
-                  <Typography textAlign="center" style={{ color: 'black' }}>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'black',
-              textDecoration: 'none',
-            }}
-          >
-            GOKTURK
-          </Typography>
-          {/* This is the part that involves the list of pages on the top; */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                component={Link} to={locationsDict[page]}
-                sx={{
-                  my: 2, color: 'black', display: 'block',
-                  backgroundColor: 'white',
-                  '&:hover': {
-                    backgroundColor: 'black',
-                    color: 'white'
-                  }
-                }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
+          {getTopInfo()}
           {/* This is the settings area on the top right. */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -212,18 +243,18 @@ function NavigationBar() {
 
             >
               {shownSettings.map((setting) => (
-                (setting!='Logout') ? ( 
+                (setting != 'Logout') ? (
                   <MenuItem key={setting}
-                  onClick={handleCloseUserMenu}
-                  component={Link} to={locationsDict[setting]}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>)
-                 : (<MenuItem key={setting}
-                 onClick={logOut}>
-                 <Typography textAlign="center">{setting}</Typography>
-                 </MenuItem>)
-                
-                
+                    onClick={handleCloseUserMenu}
+                    component={Link} to={locationsDict[setting]}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>)
+                  : (<MenuItem key={setting}
+                    onClick={logOut}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>)
+
+
               ))}
             </Menu>
           </Box>
