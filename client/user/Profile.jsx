@@ -80,9 +80,11 @@ export default function Profile() {
                             <Grid item xs={8}>
                             </Grid>
                             <Grid item xs={4}>
-                                <Button>
-                                    Delete Account
-                                </Button>
+                                <Link to='/deleteaccount'>
+                                    <Button>
+                                        Delete Account
+                                    </Button>
+                                </Link>
                             </Grid>
                         </Grid>
                     </CardContent>
