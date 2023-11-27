@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { create } from './api-user.js'
+import { create} from './api-user.js'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -14,6 +14,10 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { Link } from 'react-router-dom'
 import NavigationBar from '../src/components/NavigationBar.jsx'
+import { Box } from '@material-ui/core'
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min.js'
+import auth from '../auth/auth-helper.js'
+import { signin } from '../auth/api-auth.js'
 
 export default function Signup() {
   const [values, setValues] = useState({
@@ -21,8 +25,17 @@ export default function Signup() {
     email: '',
     password: '',
     passwordConfirm: '',
-    open: false,
-    error: ''
+    openDialog: false,
+    error: '',
+    redirect: false
+  })
+
+  const [errors, setErrors] = useState({
+    nameError: '',
+    emailError: '',
+    passwordError : '',
+    passwordConfirmError : '',
+    networkError : ''
   })
 
   const handleChange = name => event => {
@@ -34,75 +47,202 @@ export default function Signup() {
       name: values.name || undefined,
       email: values.email || undefined,
       password: values.password || undefined,
-      passwordConfirm: values.passwordConfirm || undefined
+      passwordConfirm: values.passwordConfirm || undefined,
     }
     console.log(user);
+
+    if(values.password.length > 0 && values.password.length < 8){
+      setErrors({...errors, passwordError: "Password must be at least 8 characters long"})
+    }
+    if(values.passwordConfirm.length >0 && values.passwordConfirm.length <8){
+      setErrors({...errors, passwordConfirmError: "Password must be at least 8 characters long"})
+    }
+    if(values.password != values.passwordConfirm){
+      setErrors({...errors, passwordConfirmError: "Passwords do not match", passWordError: "Passwords do not match"})
+    }
+    if(values.email.length == 0){
+      setErrors({...errors, emailError: "Invalid email"})
+    }
+    if(values.name.length == 0){
+      setErrors({... errors, nameError: "Missing name"})
+    }
+    
     create(user).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error })
       } else {
-        setValues({ ...values, error: '', open: true })
+        setValues({ ...values, error: '', openDialog: true })
+        signin(user).then((data) => {
+          if (data.error) {
+              setValues({ ...values, error: data.error });
+              console.log("Failed logging in")
+          } else {
+              auth.authenticate(data, () => {
+                setTimeout(function() { //Start the timer
+                  setValues({...values, redirect: true})
+                }.bind(this), 2000)
+              })
+          }
+        });
+
       }
     })
   }
 
   document.title = "GOKTURKS - Sign Up"
 
+  const boxStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 10,
+  }
+
+  const cardStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10
+  }
+
+  const textField = {
+    marginTop: 1,
+    marginBottom: 1,
+    color: "orange",
+  }
+
+  const buttons = {
+    marginTop: 3,
+    backgroundColor: 'black',
+    color: 'white',
+    fontSize: 17,
+    paddingLeft: 50,
+    paddingRight: 50,
+    '&:hover': {
+      backgroundColor: 'black',
+      boxShadow: 'none',
+      borderColor: 'white',
+      color: 'orange'
+    }
+  }
+  const smallBoxStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 2,
+    marginLeft: 2,
+    marginRight: 2
+  }
+  const smallButtonStyle = {
+    color: 'white',
+    paddingLeft: 50,
+    paddingRight: 50,
+    marginBottom: 2,
+    fontSize: 15,
+    fontFamily: 'bold',
+    backgroundColor: 'black',
+    marginTop: 2,
+  }
+
+  const goldenTitle = {
+    mr: 2,
+    color: 'black',
+    display: { xs: 'none', md: 'flex' },
+    fontFamily: 'sans-serif',
+    fontWeight: 700,
+    fontSize: 40,
+    textAlign: 'Left',
+    letterSpacing: '.3rem',
+    textDecoration: 'none',
+  }
+
+  
+
+  if(values.redirect){
+    return(<Redirect to='/landing'></Redirect>)
+  }
+
   return (<div>
     <NavigationBar />
-    <Card >
-      <CardContent>
-        <h6>Sign Up</h6>
-        <TextField
-          id="name"
-          label="Name"
-          value={values.name}
-          onChange={handleChange('name')}
-          margin="normal" /><br />
-        <TextField
-          id="email"
-          type="email"
-          label="Email"
-          value={values.email}
-          onChange={handleChange('email')}
-          margin="normal" /><br />
-        <TextField id="password"
-          type="password"
-          label="Password"
-          value={values.password}
-          onChange={handleChange('password')}
-          margin="normal" /><br />
-        <TextField id="passwordConfirm"
-          type="password"
-          label="Confirm your Password"
-          value={values.passwordConfirm}
-          onChange={handleChange('passwordConfirm')}
-          margin="normal" /><br />
-      </CardContent>
-      <CardActions>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={clickSubmit}>
-          Submit
-        </Button>
-      </CardActions>
-    </Card>
-    <Dialog open={values.open}>
-      <DialogTitle>New Account</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          New account successfully created.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Link to="/signin">
-          <Button color="primary" autoFocus="autoFocus" variant="contained">
-            Sign In
+    <Box sx={boxStyle}>
+
+      <Card >
+        <CardContent style={cardStyle}>
+          <h1 style={goldenTitle}>Sign Up</h1>
+          <TextField style={textField}
+            id="name"
+            label="Name"
+            variant='outlined'
+            error={errors.nameError.length > 0}
+            helperText={errors.nameError}
+
+            value={values.name}
+            onChange={handleChange('name')}
+            margin="normal"
+          /><br />
+          <TextField style={textField}
+            id="email"
+            variant='outlined'
+            type="email"
+            label="Email"
+            error={errors.emailError.length > 0}
+            helperText={errors.emailError}
+            value={values.email}
+            onChange={handleChange('email')}
+            margin="normal" /><br />
+          <TextField style={textField}
+            variant='outlined'
+            id="password"
+            type="password"
+            label="Password"
+            error={errors.passwordError.length > 0}
+            helperText={errors.passwordError}
+
+            value={values.password}
+            onChange={handleChange('password')}
+            margin="normal" /><br />
+          <TextField style={textField}
+            id="passwordConfirm"
+            type="password"
+            variant='outlined'
+            label="Confirm your Password"
+            error={errors.passwordConfirmError.length > 0}
+            helperText={errors.passwordConfirmError}
+
+            value={values.passwordConfirm}
+            onChange={handleChange('passwordConfirm')}
+            margin="normal" /><br />
+        </CardContent>
+        <CardActions style={{ alignItems: 'center', justifyContent: 'center', marginBottom:20 }}>
+          <Button style={buttons}
+            variant='contained'
+            onClick={clickSubmit}>
+            Create Account
           </Button>
-        </Link>
-      </DialogActions>
-    </Dialog>
+        </CardActions>
+      </Card>
+      <Box style={smallBoxStyle}>
+        <Typography style={{ textAlign: 'match-parent' }}>
+          Already a member? Then </Typography>
+        <Button component={Link} to={'/signin'} style={smallButtonStyle} variant='outlined' >SIGN IN</Button>
+
+      </Box>
+      <Dialog open={values.openDialog}>
+        <DialogTitle>
+          Account successfully created, enjoy your time in Gokturk!
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            New account successfully created.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+
+        </DialogActions>
+      </Dialog>
+    </Box>
+
   </div>
   )
 }

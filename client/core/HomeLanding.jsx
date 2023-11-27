@@ -3,10 +3,14 @@ import NavigationBar from '../src/components/NavigationBar';
 import { Typography, Button, Box, Card, CardContent, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import { useState } from 'react';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 export default function Home() {
+    document.title = "Welcome to Gokturks"
 
+    let [toPage,redirectToPage] = useState('');
 
     const boxStyle = {
         display: 'flex',
@@ -76,6 +80,18 @@ export default function Home() {
         textDecoration: 'none',
     }
 
+    const openSignUpPage = () => {
+        redirectToPage('/signup')
+    }
+
+    const openSignInPage = () => {
+        redirectToPage('/signin')
+    }
+
+    if(toPage.length > 0){
+        return (<Redirect to={toPage}/>)
+    }
+
     return (<>
         <NavigationBar />
         <Grid container spacing={2}>
@@ -98,11 +114,13 @@ export default function Home() {
             </Grid>
             <Grid item xs={6}>
                 <Box sx={boxStyle}>
-                    <Button sx={buttons} component={Link} to={'/signup'}>JOIN NOW</Button>
+                    <Button sx={buttons} onClick={openSignUpPage}>JOIN NOW</Button>
                     <Box sx={smallBoxStyle}>
                         <Typography  style={{textAlign:'match-parent'}}>
                             Already a member? Then </Typography>
-                    <Button  component={Link} to={'/signin'}sx={smallButtonStyle} variant='outlined' >SIGN IN</Button>
+                    <Button onClick={openSignInPage} sx={smallButtonStyle} variant='outlined' >
+                        SIGN IN
+                        </Button>
 
                     </Box>
                 </Box>

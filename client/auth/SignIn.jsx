@@ -30,6 +30,9 @@ export default function SignIn(props) {
       }
     
 
+  document.title = "GOKTURKS - Sign In"
+
+
     const attemptSignIn = () =>
     {
         const credentials = {
@@ -92,6 +95,8 @@ export default function SignIn(props) {
             color: 'orange'
         }
     }
+
+    
 
     return (
         <>
