@@ -35,13 +35,13 @@ const create = async (user) => {
   
   const read = async (params, credentials, signal) => {
     try {
-      let response = await fetch('/api/v1/users/' + params.userId, {
+      let response = await fetch('/api/v1/users/' + params, {
         method: 'GET',
         signal: signal,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + credentials.t
+          'Authorization': 'Bearer ' + credentials
         }
       })
       return await response.json()
@@ -52,12 +52,12 @@ const create = async (user) => {
   
   const update = async (params, credentials, user) => {
     try {
-      let response = await fetch('/users/' + params.userId, {
+      let response = await fetch('/api/v1/users/' + params, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + credentials.t
+          'Authorization': 'Bearer ' + credentials
         },
         body: JSON.stringify(user)
       })
@@ -69,12 +69,12 @@ const create = async (user) => {
   
   const remove = async (params, credentials) => {
     try {
-      let response = await fetch('/users/' + params.userId, {
+      let response = await fetch('/api/v1/users/' + params, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + credentials.t
+          'Authorization': 'Bearer ' + credentials
         }
       })
       return await response.json()

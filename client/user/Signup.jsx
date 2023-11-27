@@ -1,23 +1,15 @@
 import React, { useState } from 'react'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import { create} from './api-user.js'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import {Card, CardActions, CardContent,
+  Button, TextField,Dialog, DialogActions,
+DialogContent,DialogContentText,DialogTitle,
+Box} from '@material-ui/core'
+import { create } from './api-user.js'
+import { signin } from '../auth/api-auth.js'
+import auth from '../auth/auth-helper.js'
+
 import { Link } from 'react-router-dom'
 import NavigationBar from '../src/components/NavigationBar.jsx'
-import { Box } from '@material-ui/core'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min.js'
-import auth from '../auth/auth-helper.js'
-import { signin } from '../auth/api-auth.js'
 
 export default function Signup() {
   const [values, setValues] = useState({
@@ -130,7 +122,7 @@ export default function Signup() {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: 2,
+    marginTop: 10,
     marginLeft: 2,
     marginRight: 2
   }
@@ -143,11 +135,17 @@ export default function Signup() {
     fontFamily: 'bold',
     backgroundColor: 'black',
     marginTop: 2,
+    '&:hover': {
+      backgroundColor: 'black',
+      boxShadow: 'none',
+      borderColor: 'white',
+      color: 'orange'
+    }
   }
 
   const goldenTitle = {
     mr: 2,
-    color: 'black',
+    color: 'orange',
     display: { xs: 'none', md: 'flex' },
     fontFamily: 'sans-serif',
     fontWeight: 700,
@@ -166,10 +164,9 @@ export default function Signup() {
   return (<div>
     <NavigationBar />
     <Box sx={boxStyle}>
-
+      <h1 style={goldenTitle}>Sign Up</h1>
       <Card >
         <CardContent style={cardStyle}>
-          <h1 style={goldenTitle}>Sign Up</h1>
           <TextField style={textField}
             id="name"
             label="Name"
@@ -222,10 +219,14 @@ export default function Signup() {
           </Button>
         </CardActions>
       </Card>
-      <Box style={smallBoxStyle}>
-        <Typography style={{ textAlign: 'match-parent' }}>
-          Already a member? Then </Typography>
-        <Button component={Link} to={'/signin'} style={smallButtonStyle} variant='outlined' >SIGN IN</Button>
+      <Box sx={smallBoxStyle}>
+        <div style={{ textAlign: 'match-parent' }}>
+          Already a member? Then </div>
+        <Button
+         component={Link} 
+         to={'/signin'} 
+         style={smallButtonStyle} 
+         variant='outlined'>SIGN IN</Button>
 
       </Box>
       <Dialog open={values.openDialog}>

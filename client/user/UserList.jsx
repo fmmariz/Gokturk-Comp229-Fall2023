@@ -1,9 +1,11 @@
 import { list } from './api-user.js'
 import { useEffect, useState } from "react";
 import React from 'react';
-import { Typography, Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, Box } from '@material-ui/core';
 import NavigationBar from '../src/components/NavigationBar.jsx';
 import auth from '../auth/auth-helper.js';
+import UserListRow from '../src/components/UserListRow.jsx';
+import UserListComponent from '../src/components/UserListComponent.jsx';
 
 export default function UserList() {
   //Original State is Empty
@@ -26,30 +28,17 @@ export default function UserList() {
     return function cleanup() {
       abortController.abort()
     }
-
   }, [])
-
-  const listStyle = {
-    listStyleType : 'none'
-  };
-
-  const listObjectStyle = {
-    marginBottom : '5px'
-  }
 
 
   return (
     <>
 
     <NavigationBar />
-    <ul style={listStyle}>
-      {userList.map((user) =>
-      <Card key={user.email} style={listObjectStyle}>
-      <CardContent >
-          {user.name} 
-      </CardContent>
-    </Card>)}
-    </ul>
+    <Box sx={{textAlign:'center'}}>
+      <h1 style={{color:'orange'}}> Complete User List</h1>
+      <UserListComponent userList={userList}/>
+    </Box>
 
     </>
   )
