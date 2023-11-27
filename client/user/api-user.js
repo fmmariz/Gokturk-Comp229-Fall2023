@@ -15,22 +15,6 @@ const create = async (user) => {
     }
   }
 
-  const signin = async (user) => {
-    try {
-        let response = await fetch('/api/v1/users/login', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(user)
-        })
-      return await response.json()
-    } catch(err) {
-      console.log(err)
-    }
-  }
-  
   // Modified to also send authentication token of JWT
   const list = async (credentials, signal) => {
     try {
@@ -40,7 +24,7 @@ const create = async (user) => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + credentials.t
+          'Authorization': 'Bearer ' + credentials
         }
       })
       return await response.json()

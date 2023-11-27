@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import React from 'react';
 import { Typography, Card, CardContent } from '@material-ui/core';
 import NavigationBar from '../src/components/NavigationBar.jsx';
-
+import auth from '../auth/auth-helper.js';
 
 export default function UserList() {
   //Original State is Empty
@@ -13,7 +13,9 @@ export default function UserList() {
   useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal
-    list(signal).then((data) => {
+    const jwt = auth.isAuthenticated();
+    const token = jwt.token;
+    list(token, signal).then((data) => {
       if (data && data.error) {
         console.log(data.error)
       } else {
