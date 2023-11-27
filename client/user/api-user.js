@@ -53,7 +53,7 @@ const create = async (user) => {
   const update = async (params, credentials, user) => {
     try {
       let response = await fetch('/api/v1/users/' + params, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',

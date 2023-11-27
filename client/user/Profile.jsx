@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 import auth from "../auth/auth-helper";
 import { read } from "./api-user";
@@ -65,19 +66,18 @@ export default function Profile() {
                         <Grid container >
                             <Grid item xs={10}>
                                 <h2>{userData.name}</h2>
-
                             </Grid>
                             <Grid item xs={2}>
-                                <IconButton aria-label="edit">
-                                    <EditIcon />
-                                </IconButton>
+                                <Link to='/editprofile'>
+                                    <IconButton aria-label="edit">
+                                        <EditIcon />
+                                    </IconButton>
+                                </Link>
                             </Grid>
                             <Grid item xs={12}>
                                 <h3>{userData.email}</h3>
-
                             </Grid>
                             <Grid item xs={8}>
-
                             </Grid>
                             <Grid item xs={4}>
                                 <Button>
