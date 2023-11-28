@@ -22,8 +22,8 @@ productRouter.route('/top-5-cheap').get(aliasTopTours, GetAllProducts);
 productRouter.use(protect);
 
 // Assuming 'admin' role is required to modify the product data
-productRouter.post('/', restrictTo('admin'), CreateProduct); // Create a new product
-productRouter.patch('/:id', restrictTo('admin'), UpdateProduct); // Update a product by ID
-productRouter.delete('/:id', restrictTo('admin'), DeleteProduct); // Delete a product by ID
+productRouter.post('/',  CreateProduct); // Create a new product
+productRouter.patch('/:id', UpdateProduct); // Update a product by ID
+productRouter.delete('/:id', DeleteProduct); // Delete a product by ID
 
 module.exports = productRouter;
