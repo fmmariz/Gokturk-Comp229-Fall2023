@@ -67,7 +67,6 @@ export default function Signup() {
         signin(user).then((data) => {
           if (data.error) {
               setValues({ ...values, error: data.error });
-              console.log("Failed logging in")
           } else {
               auth.authenticate(data, () => {
                 setTimeout(function() { //Start the timer

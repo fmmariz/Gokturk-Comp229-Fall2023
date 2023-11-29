@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Card, CardContent } from '@material-ui/core'
-
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 function UserListRow({user}) {
     
@@ -22,13 +22,15 @@ function UserListRow({user}) {
         color:'gray'
       }
     
-      console.log(user)
     return (
         <Card  style={listObjectStyle}>
-            <CardContent style={{alignItems:'center', justifyContent:'center', textAlign:'center', padding:1}} >
+          <Link to={'/users/'+user._id}>
+          <CardContent style={{alignItems:'center', justifyContent:'center', textAlign:'center', padding:1}} >
                 <h5 style={nameStyle}>{user.name}</h5>
                 <h6 style={emailStyle}>{user.email}</h6>
             </CardContent>
+          </Link>
+
         </Card>
     );
 }

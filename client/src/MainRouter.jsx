@@ -10,6 +10,7 @@ import ReroutingRoutes from '../auth/ReroutingRoutes';
 import Profile from '../user/Profile';
 import EditProfile from '../user/EditProfile';
 import DeleteUser from '../user/DeleteUser';
+import OtherUserProfile from '../user/OtherUserProfile';
 
 const MainRouter = () => (
   <>
@@ -22,6 +23,7 @@ const MainRouter = () => (
       <ReroutingRoutes exact path='/profile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={Profile} />
       <ReroutingRoutes exact path='/editprofile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={EditProfile} />
       <ReroutingRoutes exact path='/deleteaccount' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={DeleteUser} />
+      <ReroutingRoutes exact path="/users/:id" accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={OtherUserProfile} />
 
       <ReroutingRoutes exact path='/signin' accessibleIfLoggedIn={true} pathToReroute={'/landing'} component={SignIn} />
       <ReroutingRoutes exact path='/signup' accessibleIfLoggedIn={true} pathToReroute={'/landing'} component={Signup} />
