@@ -7,8 +7,9 @@ import { read } from "./api-user";
 import { useState, useEffect } from "react";
 import NavigationBar from "../src/components/NavigationBar";
 
-import { Box, Card, CardContent, Grid, Button, IconButton } from '@material-ui/core'
+import { Box, Card, CardContent, Grid, Button, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit'
+
 
 export default function Profile() {
 
@@ -21,7 +22,6 @@ export default function Profile() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: 10,
     }
 
     const cardStyle = {
@@ -29,7 +29,6 @@ export default function Profile() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10
     }
 
 
@@ -56,10 +55,25 @@ export default function Profile() {
         }
     }, [])
 
+    
+  const warningButton = {
+    background: 'white',
+    color: 'red',
+    width: "100%",
+    border: 1,
+    borderColor: 'red',
+    '&:hover': {
+      backgroundColor: 'red',
+      boxShadow: 'none',
+      border: 1,
+      color: 'white'
+    }
+  }
+
     return (
         <>
             <NavigationBar />
-            <h1>Profile Informations</h1>
+            <h1 style={{width:"100%", textAlign:'center', justifyContent:'center', color:'orange'}}>Profile Informations</h1>
             <Box sx={boxStyle}>
                 <Card sx={cardStyle}>
                     <CardContent>
@@ -67,21 +81,21 @@ export default function Profile() {
                             <Grid item xs={10}>
                                 <h2>{userData.name}</h2>
                             </Grid>
-                            <Grid item xs={2}>
+                            <Grid item xs={2} sx={{alignItems:'center', justifyContent:'center'}}>
                                 <Link to='/editprofile'>
-                                    <IconButton aria-label="edit">
+                                    <IconButton aria-label="edit" sx={{height:'100%', width:'100%'}}>
                                         <EditIcon />
                                     </IconButton>
                                 </Link>
                             </Grid>
                             <Grid item xs={12}>
-                                <h3>{userData.email}</h3>
+                                <h3 style={{color:'grey'}}>{userData.email}</h3>
                             </Grid>
                             <Grid item xs={8}>
                             </Grid>
                             <Grid item xs={4}>
                                 <Link to='/deleteaccount'>
-                                    <Button>
+                                    <Button sx={warningButton}>
                                         Delete Account
                                     </Button>
                                 </Link>

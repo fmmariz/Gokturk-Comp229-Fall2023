@@ -3,7 +3,7 @@ import NavigationBar from '../src/components/NavigationBar';
 import { Typography, Button, Box, Card, CardContent, Grid } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { list } from '../user/api-user';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom/cjs/react-router-dom.js';
 import auth from '../auth/auth-helper';
 import UserListRow from '../src/components/UserListRow.jsx';
 import UserListComponent from '../src/components/UserListComponent.jsx';
@@ -82,15 +82,15 @@ export default function Home() {
     }
 
     const openSignUpPage = () => {
-        redirectToPage('/signup')
+        redirectToPage("/signup")
     }
 
     const openSignInPage = () => {
-        redirectToPage('/signin')
+        redirectToPage("/signin")
     }
 
     if (toPage.length > 0) {
-        return (<Redirect to={toPage} />)
+        return (<Redirect to={'/signin'} />)
     }
 
     const loggedIn = auth.isAuthenticated();
@@ -152,14 +152,17 @@ export default function Home() {
         } else {
             return (
                 <>
-                    <Button sx={buttons} onClick={openSignUpPage}>JOIN NOW</Button>
+                    <Link to="/signup">
+                        <Button sx={buttons}>JOIN NOW</Button>
+                    </Link>
                     <Box sx={smallBoxStyle}>
                         <Typography style={{ textAlign: 'match-parent' }}>
                             Already a member? Then </Typography>
-                        <Button onClick={openSignInPage} sx={smallButtonStyle} variant='outlined' >
-                            SIGN IN
-                        </Button>
-
+                        <Link to="/signin">
+                            <Button sx={smallButtonStyle} variant='outlined' >
+                                SIGN IN
+                            </Button>
+                        </Link>
                     </Box>
                 </>
             )
@@ -168,19 +171,20 @@ export default function Home() {
 
     return (<>
         <NavigationBar />
-        { {loggedIn} ? <Box sx={{display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop:3,
-        marginBottom: 0}}>
+        { {loggedIn } ? <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: 3,
+            marginBottom: 0
+        }}>
             <Card>
                 <CardContent >
                     <img src={gokturkLogo} alt="Logo" height="120px" width="120px" />
-
                 </CardContent>
             </Card>
         </Box> : <></>}
-        <Grid sx={{marginTop:0}} container spacing={2}>
+        <Grid sx={{ marginTop: 0 }} container spacing={2}>
             <Grid item xs={6}>
                 <Box sx={boxStyle}>
                     {leftSide()}

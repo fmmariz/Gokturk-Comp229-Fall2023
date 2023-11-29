@@ -12,7 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { Link } from 'react-router-dom'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import auth from './auth-helper';
 
 
@@ -21,51 +21,68 @@ export default function SignIn(props) {
         email: '',
         password: '',
         openDialog: false,
-        error: '',
         redirectToReferrer: false
-      })
+    })
 
-      const handleChange = name => event => {
+    const [errors, setErrors] = useState({
+        email: '',
+        password: '',
+        general: ''
+    })
+
+    const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value })
-      }
-    
-
-  document.title = "GOKTURKS - Sign In"
+    }
 
 
-    const attemptSignIn = () =>
-    {
+    document.title = "GOKTURKS - Sign In"
+
+
+
+    const attemptSignIn = () => {
         const credentials = {
-            email:  values.email || undefined,
-            password: values.password ||undefined
+            email: values.email || undefined,
+            password: values.password || undefined
         }
-        console.log(credentials)
+        var failLogin = false
+        var emailMsg = ''
+        var passwordMsg = ''
+        if(credentials.email == undefined || !credentials.email.includes('@')){
+            emailMsg = "Missing or Invalid e-mail"
+            failLogin = true
+        }
+        if(credentials.password.length < 8 || credentials.password == undefined){
+            passwordMsg = "Password is missing or shorter than 8 characters"
+            failLogin = true
+        }
+        setErrors({password: passwordMsg, email: emailMsg})
+        if(failLogin) return
+
         signin(credentials).then((data) => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
-                console.log("Failed logging in")
 
             } else {
                 auth.authenticate(data, () => {
                     setValues({ ...values, error: '', openDialog: true })
-                    setTimeout(function() { //Start the timer
-                        setValues({...values, redirectToReferrer: true})
+                    setTimeout(function () { //Start the timer
+                        setValues({ ...values, redirectToReferrer: true })
                     }.bind(this), 1000)
                 })
             }
-          });
+        });
     }
-    
-    const {from} = props.location.state || {
+
+    const { from } = props.location.state || {
         from: {
-          pathname: '/'
+            pathname: '/'
         }
     }
-    const {redirectToReferrer} = values
+    const { redirectToReferrer } = values
     if (redirectToReferrer) {
-        return (<Redirect to={from}/>)
+        return (<Redirect to={from} />)
     }
-  
+
     const boxStyle = {
         display: 'flex',
         flexDirection: 'column',
@@ -82,13 +99,13 @@ export default function SignIn(props) {
     const textField = {
         marginTop: 1,
         marginBottom: 1,
-        color:"orange"
+        color: "orange"
     }
 
     const buttons = {
         marginTop: 3,
         backgroundColor: 'black',
-        '&:hover':{
+        '&:hover': {
             backgroundColor: 'grey',
             boxShadow: 'none',
             borderColor: 'white',
@@ -96,42 +113,47 @@ export default function SignIn(props) {
         }
     }
 
-    
+
 
     return (
         <>
             <NavigationBar />
             <Box sx={boxStyle}
-             >
+            >
                 <Card>
                     <CardContent sx={cardStyle}>
-                    <img src={gokturkLogo} 
-                    alt="GOKTURKS Logo"
-                    style={{
-                        maxWidth:"50%"}}/>
+                        <img src={gokturkLogo}
+                            alt="GOKTURKS Logo"
+                            style={{
+                                maxWidth: "50%"
+                            }} />
                         <TextField label="E-Mail"
-                        sx={textField}
-                        placeholder='E-mail'
-                        type="email"
-                        value={values.email}
-                        onChange={handleChange('email')}
-                        color='secondary'>
+                            sx={textField}
+                            placeholder='E-mail'
+                            type="email"
+                            value={values.email}
+                            error={errors.email.length>0}
+                            helperText={errors.email}
+                            onChange={handleChange('email')}
+                            color='secondary'>
 
                         </TextField >
-                        <TextField 
-                        label="Password"
-                        sx={textField} 
-                        placeholder='Password'
-                        type='password'
-                        value={values.password}
-                        onChange={handleChange('password')}
-                        color='secondary'
+                        <TextField
+                            label="Password"
+                            sx={textField}
+                            placeholder='Password'
+                            type='password'
+                            value={values.password}
+                            error={errors.password.length>0}
+                            helperText={errors.password}
+                            onChange={handleChange('password')}
+                            color='secondary'
                         >
 
                         </TextField>
                         <Button sx={buttons}
-                        variant="contained"
-                        onClick={attemptSignIn}>
+                            variant="contained"
+                            onClick={attemptSignIn}>
                             Sign In
                         </Button>
                     </CardContent>
@@ -139,20 +161,21 @@ export default function SignIn(props) {
                 <Typography sx={{ marginTop: 3 }}>
                     Don't have an account?
                 </Typography>
-                <Button sx={buttons}
-                variant="contained"
-                hrey="/signup">
-                    Sign Up Now !
-                </Button>
+                <Link to="/signup">
+                    <Button sx={buttons}
+                        variant="contained">
+                        Sign Up Now !
+                    </Button>
+                </Link>
             </Box>
-                <Dialog open={values.openDialog}>
-                    <DialogTitle>Welcome</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Successfully Logged in
-                        </DialogContentText>
-                    </DialogContent>
-                </Dialog>
+            <Dialog open={values.openDialog}>
+                <DialogTitle>Welcome</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Successfully Logged in
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
         </>
     );
 }
