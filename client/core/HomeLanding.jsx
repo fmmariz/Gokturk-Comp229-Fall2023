@@ -1,6 +1,6 @@
 import React from 'react';
 import NavigationBar from '../src/components/NavigationBar';
-import { Typography, Button, Box, Card, CardContent, Grid } from '@mui/material';
+import { Typography, Button, Box, Card, CardContent, Grid, Paper } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { list } from '../user/api-user';
 import { Link } from 'react-router-dom/cjs/react-router-dom.js';
@@ -8,6 +8,8 @@ import auth from '../auth/auth-helper';
 import UserListRow from '../src/components/UserListRow.jsx';
 import UserListComponent from '../src/components/UserListComponent.jsx';
 import gokturkLogo from './../assets/images/gokturk_logo.jpg';
+import car from './../assets/images/car.png';
+
 
 export default function Home() {
     document.title = "Welcome to Gokturks"
@@ -184,7 +186,8 @@ export default function Home() {
                 </CardContent>
             </Card>
         </Box> : <></>}
-        <Grid sx={{ marginTop: 0 }} container spacing={2}>
+        <div style={{backgroundSize:'1080px', backgroundRepeat:'no-repeat', backgroundImage:`url(${car})`}}>
+        <Grid sx={{ marginTop: 0}}  container spacing={2}>
             <Grid item xs={6}>
                 <Box sx={boxStyle}>
                     {leftSide()}
@@ -196,6 +199,7 @@ export default function Home() {
                 </Box>
             </Grid>
         </Grid>
+        </div>
     </>
     );
 }
