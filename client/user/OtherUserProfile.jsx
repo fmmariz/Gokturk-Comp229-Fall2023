@@ -13,6 +13,7 @@ import EditIcon from '@mui/icons-material/Edit'
 
 export default function OtherUserProfile({match}) {
 
+    console.log("are you fucking ok?")
     let [userData, setUserData] = useState({
         name: undefined,
         email: undefined

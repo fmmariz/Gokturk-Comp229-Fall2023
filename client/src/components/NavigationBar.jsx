@@ -49,11 +49,11 @@ function NavigationBar({currentStatus, changeLogStatus}) {
   const settingsLogged = ['Profile', 'Logout'];
   const settingsNotLogged = ['Sign Up', 'Log In'];
   const locationsDict = {
-    'User List': 'listusers',
-    'Product List': 'listproducts',
-    'Sign Up': "signup",
-    'Log In': "signin",
-    'Profile': "profile",
+    'User List': '/listusers',
+    'Product List': '/listproducts',
+    'Sign Up': "/signup",
+    'Log In': "/signin",
+    'Profile': "/profile",
   }
   let [hasLoggedOut, setHasLoggedOut] = useState(false);
   var shownSettings = [];

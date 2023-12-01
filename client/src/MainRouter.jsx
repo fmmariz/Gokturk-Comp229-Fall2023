@@ -28,7 +28,7 @@ function MainRouter(props){
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/profile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={Profile} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/editprofile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={EditProfile} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/deleteaccount' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={DeleteUser} />
-      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path="/users:id" accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={OtherUserProfile} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path="/users/:id" accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={OtherUserProfile} />
 
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/signin' accessibleIfLoggedIn={true} pathToReroute={'/'} component={SignIn} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/signup' accessibleIfLoggedIn={true} pathToReroute={'/'} component={SignUp} />
