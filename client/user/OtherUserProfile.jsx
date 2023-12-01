@@ -35,7 +35,7 @@ export default function OtherUserProfile({match}) {
     useEffect(() => {
         const abortController = new AbortController()
         const signal = abortController.signal
-        const jwt = auth.isAuthenticated();
+        const jwt = auth.tryToGetToken();
         const token = jwt.token;
         read(match.params.id, token, signal).then((data) => {
             if (data && data.error) {
@@ -58,7 +58,6 @@ export default function OtherUserProfile({match}) {
 
     return (
         <>
-            <NavigationBar />
             <h1 style={{ width: "100%", textAlign: 'center', justifyContent: 'center', color: 'orange' }}>
                 Seeing profile of: {userData.name}</h1>
             <Box sx={boxStyle}>

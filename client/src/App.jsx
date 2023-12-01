@@ -3,6 +3,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import MainRouter from './MainRouter';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
+import { useState } from 'react';
+import auth from '../auth/auth-helper';
+import NavigationBar from './components/NavigationBar';
 
 const App = () => {
   React.useEffect(() => {
@@ -24,10 +27,28 @@ const App = () => {
     }
   });
 
+  const [loggedIn, setLoggedIn] = useState(auth.isAuthenticated)
+  const changeLogStatus = (bool) => {
+    console.log("CHANGING STATE")
+    console.log(loggedIn)
+    console.log("Requesting to change status to " + bool)
+    if (bool) {
+      setLoggedIn(true)
+    } else {
+      setLoggedIn(false)
+    }
+    console.log(loggedIn)
+  };
+
+  useEffect(() => {
+    console.log("epic", loggedIn)
+  }, [loggedIn])
+
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <MainRouter />
+        <NavigationBar key={loggedIn} currentStatus={loggedIn} changeLogStatus={changeLogStatus} />
+        <MainRouter currentStatus={loggedIn} changeLogStatus={changeLogStatus} />
       </ThemeProvider>
     </Router>
   );

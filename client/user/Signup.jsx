@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {Card, CardActions, CardContent,
   Button, TextField,Dialog, DialogActions,
 DialogContent,DialogContentText,DialogTitle,
-Box} from '@material-ui/core'
+Box} from '@mui/material'
 import { create } from './api-user.js'
 import { signin } from '../auth/api-auth.js'
 import auth from '../auth/auth-helper.js'
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import NavigationBar from '../src/components/NavigationBar.jsx'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min.js'
 
-export default function Signup() {
+export default function Signup({changeLogStatus}) {
   const [values, setValues] = useState({
     name: '',
     email: '',
@@ -68,6 +68,7 @@ export default function Signup() {
           if (data.error) {
               setValues({ ...values, error: data.error });
           } else {
+            changeLogStatus(true)
               auth.authenticate(data, () => {
                 setTimeout(function() { //Start the timer
                   setValues({...values, redirect: true})
@@ -157,11 +158,10 @@ export default function Signup() {
   
 
   if(values.redirect){
-    return(<Redirect to='/landing'></Redirect>)
+    return(<Redirect to='/'></Redirect>)
   }
 
   return (<div>
-    <NavigationBar />
     <Box sx={boxStyle}>
       <h1 style={goldenTitle}>Sign Up</h1>
       <Card >

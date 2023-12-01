@@ -39,7 +39,7 @@ export default function EditProfile() {
   useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal
-    const jwt = auth.isAuthenticated();
+    const jwt = auth.tryToGetToken();
     const token = jwt.token;
     read(jwt.data.user._id, token, signal).then((data) => {
       if (data && data.error) {
@@ -67,7 +67,7 @@ export default function EditProfile() {
     console.log(user)
     if(!checkInfo()) return
 
-    const jwt = auth.isAuthenticated();
+    const jwt = auth.tryToGetToken();
     const token = jwt.token;
     const userId = jwt.data.user._id
 
@@ -183,7 +183,6 @@ export default function EditProfile() {
 
   return (
     <>
-      <NavigationBar />
       <Box sx={boxStyle}>
         <h1>Edit Profile Information</h1>
         <Card>

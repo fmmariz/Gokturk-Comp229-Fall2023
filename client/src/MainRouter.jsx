@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Home from '../core/HomeLanding'
 import NavigationBar from './components/NavigationBar'
-import Signup from '../user/SignUp';
+import SignUp from '../user/SignUp';
 import SignIn from '../auth/SignIn';
 import UserList from '../user/UserList';
 import ProductList from '../product/ProductList';
@@ -11,25 +11,31 @@ import Profile from '../user/Profile';
 import EditProfile from '../user/EditProfile';
 import DeleteUser from '../user/DeleteUser';
 import OtherUserProfile from '../user/OtherUserProfile';
+import auth from '../auth/auth-helper';
 
-const MainRouter = () => (
-  <>
+function MainRouter(props){
+
+
+
+  return (
+<>
+
     <Switch>
       <Route exact path='/' component={Home} />
-      <Route exact path='/landing' component={Home} />
 
-      <ReroutingRoutes exact path='/listusers' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={UserList} />
-      <ReroutingRoutes exact path='/listproducts' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={ProductList} />
-      <ReroutingRoutes exact path='/profile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={Profile} />
-      <ReroutingRoutes exact path='/editprofile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={EditProfile} />
-      <ReroutingRoutes exact path='/deleteaccount' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={DeleteUser} />
-      <ReroutingRoutes exact path="/users/:id" accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={OtherUserProfile} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/listusers' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={UserList} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/listproducts' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={ProductList} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/profile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={Profile} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/editprofile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={EditProfile} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/deleteaccount' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={DeleteUser} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path="/users:id" accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={OtherUserProfile} />
 
-      <ReroutingRoutes exact path='/signin' accessibleIfLoggedIn={true} pathToReroute={'/landing'} component={SignIn} />
-      <ReroutingRoutes exact path='/signup' accessibleIfLoggedIn={true} pathToReroute={'/landing'} component={Signup} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/signin' accessibleIfLoggedIn={true} pathToReroute={'/'} component={SignIn} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/signup' accessibleIfLoggedIn={true} pathToReroute={'/'} component={SignUp} />
 
     </Switch>
   </>
-)
+  )
+};
 
 export default MainRouter

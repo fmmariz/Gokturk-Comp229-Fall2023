@@ -3,12 +3,21 @@ import { signout } from './api-auth.js'
 
 
 const auth = {
-    isAuthenticated() {
+    tryToGetToken() {
       if (typeof window == "undefined")
         return false
   
       if (localStorage.getItem('jwt'))
         return JSON.parse(localStorage.getItem('jwt'))
+      else
+        return false
+    },
+    isAuthenticated() {
+      if (typeof window == "undefined")
+        return false
+  
+      if (localStorage.getItem('jwt'))
+        return true
       else
         return false
     },

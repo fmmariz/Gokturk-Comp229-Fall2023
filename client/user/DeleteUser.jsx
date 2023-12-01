@@ -18,7 +18,7 @@ export default function DeleteUser() {
   const [page, setRedirect] = useState('')
 
   const clickDelete = () => {
-    const jwt = auth.isAuthenticated();
+    const jwt = auth.tryToGetToken();
     const token = jwt.token;
     const userId = jwt.data.user._id
 
@@ -33,7 +33,7 @@ export default function DeleteUser() {
         auth.clearJWT();
         setShow({ showDialog: true, dialogTitle: 'Account Permanently Deleted', dialogText: 'Redirecting you back to the homepage...' })
         setTimeout(function () { //Start the timer
-          setRedirect('/landing')
+          setRedirect('/')
         }.bind(this), 2000)
       }
     })
@@ -108,7 +108,6 @@ export default function DeleteUser() {
 
   return (
     <>
-      <NavigationBar />
       <Box sx={boxStyle}>
         <Card>
           <CardContent sx={warningCardStyle}>

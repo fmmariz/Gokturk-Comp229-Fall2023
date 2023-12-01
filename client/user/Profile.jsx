@@ -35,7 +35,7 @@ export default function Profile() {
     useEffect(() => {
         const abortController = new AbortController()
         const signal = abortController.signal
-        const jwt = auth.isAuthenticated();
+        const jwt = auth.tryToGetToken();
         const token = jwt.token;
         console.log(jwt.data.user._id)
         read(jwt.data.user._id, token, signal).then((data) => {
@@ -72,7 +72,6 @@ export default function Profile() {
 
     return (
         <>
-            <NavigationBar />
             <h1 style={{width:"100%", textAlign:'center', justifyContent:'center', color:'orange'}}>Profile Informations</h1>
             <Box sx={boxStyle}>
                 <Card sx={cardStyle}>

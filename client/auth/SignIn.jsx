@@ -24,6 +24,7 @@ export default function SignIn(props) {
         redirectToReferrer: false
     })
 
+
     const [errors, setErrors] = useState({
         email: '',
         password: '',
@@ -65,6 +66,7 @@ export default function SignIn(props) {
             } else {
                 auth.authenticate(data, () => {
                     setValues({ ...values, error: '', openDialog: true })
+                    props.changeLogStatus(true)
                     setTimeout(function () { //Start the timer
                         setValues({ ...values, redirectToReferrer: true })
                     }.bind(this), 1000)
@@ -73,14 +75,10 @@ export default function SignIn(props) {
         });
     }
 
-    const { from } = props.location.state || {
-        from: {
-            pathname: '/'
-        }
-    }
+
     const { redirectToReferrer } = values
     if (redirectToReferrer) {
-        return (<Redirect to={from} />)
+        return (<Redirect to={'/'} />)
     }
 
     const boxStyle = {
@@ -117,7 +115,6 @@ export default function SignIn(props) {
 
     return (
         <>
-            <NavigationBar />
             <Box sx={boxStyle}
             >
                 <Card>

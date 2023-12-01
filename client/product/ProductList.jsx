@@ -14,7 +14,6 @@ export default function UserList() {
 
   return (
     <>
-    <NavigationBar/>
     <h6>Product List</h6>
     </>
   )

@@ -1,7 +1,7 @@
 // taken and modified from https://mui.com/material-ui/react-app-bar/
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom/cjs/react-router-dom';
 
 //material-ui stuff
 import AppBar from '@mui/material/AppBar';
@@ -20,13 +20,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import auth from '../../auth/auth-helper';
 import { useState } from 'react';
 import gokturkLogo from './../../assets/images/gokturk_logo.jpg';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
-function NavigationBar() {
+function NavigationBar({currentStatus, changeLogStatus}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [loggedIn, setLoggedIn] = useState(currentStatus);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -43,6 +44,7 @@ function NavigationBar() {
     setAnchorElUser(null);
   };
 
+
   const pages = ['User List', 'Product List'];
   const settingsLogged = ['Profile', 'Logout'];
   const settingsNotLogged = ['Sign Up', 'Log In'];
@@ -56,7 +58,9 @@ function NavigationBar() {
   let [hasLoggedOut, setHasLoggedOut] = useState(false);
   var shownSettings = [];
   var topRightIcon = null;
-  var loggedIn = auth.isAuthenticated()
+  
+  
+  
   if (loggedIn) {
     shownSettings = settingsLogged;
     topRightIcon = <Avatar alt="Username" src="/path/to/user" />;
@@ -66,23 +70,21 @@ function NavigationBar() {
   }
 
   const logOut = () => {
-    console.log("Trying to log out")
     auth.clearJWT(
       () => {
-        console.log("Trying to log out")
+        changeLogStatus(false)
         setHasLoggedOut(true)
       }
     );
   }
 
   if (hasLoggedOut) {
-    console.log("Moving to main")
     return (<Redirect to="./" />)
   }
 
   const getTopInfo = () => {
     if(loggedIn){
-    return (<><a href="/landing">
+    return (<><a href="/">
       <img src={gokturkLogo} alt="Logo" height="50px" width="50px" />
     </a>
       <Typography
@@ -90,7 +92,7 @@ function NavigationBar() {
         noWrap
         marginLeft={"10px"}
         component="a"
-        href="/landing"
+        href="/"
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
@@ -183,7 +185,7 @@ function NavigationBar() {
       </Box></>)
     }else{
       return (<Box flexGrow={1} sx={{alignItems:'center', justifyContent:'center', display:'flex', flexDirection:'row'}}>
-      <a href="/landing">
+      <a href="/">
       <img src={gokturkLogo} alt="Logo" height="50px" width="50px" />
     </a>
       <Typography
@@ -191,7 +193,7 @@ function NavigationBar() {
         noWrap
         marginLeft={"10px"}
         component="a"
-        href="/landing"
+        href="/"
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
@@ -202,7 +204,6 @@ function NavigationBar() {
           textDecoration: 'none',
         }}
       >
-
         GOKTURKS
       </Typography></Box>)
     }
@@ -215,7 +216,6 @@ function NavigationBar() {
         color: "black"
       }}>
       <Container maxWidth="xl">
-
         <Toolbar disableGutters>
           {getTopInfo()}
           {/* This is the settings area on the top right. */}
@@ -240,7 +240,6 @@ function NavigationBar() {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-
             >
               {shownSettings.map((setting) => (
                 (setting != 'Logout') ? (
@@ -253,8 +252,6 @@ function NavigationBar() {
                     onClick={logOut}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>)
-
-
               ))}
             </Menu>
           </Box>

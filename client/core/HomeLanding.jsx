@@ -95,7 +95,9 @@ export default function Home() {
         return (<Redirect to={'/signin'} />)
     }
 
-    const loggedIn = auth.isAuthenticated();
+    const loggedIn = auth.tryToGetToken();
+
+
 
     let [userList, setUserList] = useState([]);
 
@@ -105,7 +107,7 @@ export default function Home() {
         }
         const abortController = new AbortController()
         const signal = abortController.signal
-        const jwt = auth.isAuthenticated();
+        const jwt = auth.tryToGetToken();
         const token = jwt.token;
         list(token, signal).then((data) => {
             if (data && data.error) {
@@ -124,7 +126,6 @@ export default function Home() {
 
     const leftSide = () => {
         if (loggedIn) {
-            console.log(userList)
             return (
                 <>
                     <h1 style={{ color: 'orange' }}> Recent Users</h1>
@@ -171,34 +172,45 @@ export default function Home() {
         }
     }
 
+    const showlogo = () => {
+        if (!loggedIn) {
+            return (<Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: 3,
+                marginBottom: 0
+            }}>
+                <Card>
+                    <CardContent >
+                        <img src={gokturkLogo} alt="Logo" height="120px" width="120px" />
+                    </CardContent>
+                </Card>
+            </Box>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+
+    }
+
     return (<>
-        <NavigationBar />
-        { {loggedIn } ? <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: 3,
-            marginBottom: 0
-        }}>
-            <Card>
-                <CardContent >
-                    <img src={gokturkLogo} alt="Logo" height="120px" width="120px" />
-                </CardContent>
-            </Card>
-        </Box> : <></>}
-        <div style={{backgroundSize:'1080px', backgroundRepeat:'no-repeat', backgroundImage:`url(${car})`}}>
-        <Grid sx={{ marginTop: 0}}  container spacing={2}>
-            <Grid item xs={6}>
-                <Box sx={boxStyle}>
-                    {leftSide()}
-                </Box>
+        {showlogo()}
+        <div style={{ backgroundSize: '1080px', backgroundRepeat: 'no-repeat', backgroundImage: `url(${car})` }}>
+            <Grid sx={{ marginTop: 0 }} container spacing={2}>
+                <Grid item xs={6}>
+                    <Box sx={boxStyle}>
+                        {leftSide()}
+                    </Box>
+                </Grid>
+                <Grid item xs={6}>
+                    <Box sx={boxStyle}>
+                        {rightSide()}
+                    </Box>
+                </Grid>
             </Grid>
-            <Grid item xs={6}>
-                <Box sx={boxStyle}>
-                    {rightSide()}
-                </Box>
-            </Grid>
-        </Grid>
         </div>
     </>
     );

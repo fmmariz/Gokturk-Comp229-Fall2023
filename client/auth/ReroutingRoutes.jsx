@@ -10,8 +10,8 @@ import { Redirect, Route } from 'react-router-dom';
 
 // Utils
 
-const ReroutingRoutes = ({ component: Component, accessibleIfLoggedIn, pathToReroute, ...rest }) => {  
-  var session_token = auth.isAuthenticated();
+const ReroutingRoutes = ({ component: Component, accessibleIfLoggedIn, pathToReroute, currentStatus, changeLogStatus, ...rest }) => {  
+  var session_token = auth.tryToGetToken();
   var willReroute = false;
 
   if(!session_token && accessibleIfLoggedIn){
@@ -20,10 +20,13 @@ const ReroutingRoutes = ({ component: Component, accessibleIfLoggedIn, pathToRer
   if(session_token && !accessibleIfLoggedIn){
     willReroute = true;
   }
+
+  
+
   return (
-    <Route {...rest} render={props => (
+    <Route {...rest}  render={props => (
      willReroute ? (
-      < Component  {...props} />
+      < Component  currentStatus={currentStatus} changeLogStatus={changeLogStatus}  {...props} />
       ) : (
             <Redirect to={{
               pathname: pathToReroute,
@@ -32,6 +35,7 @@ const ReroutingRoutes = ({ component: Component, accessibleIfLoggedIn, pathToRer
             />
           )
       )} 
+      
     />
   )
 };

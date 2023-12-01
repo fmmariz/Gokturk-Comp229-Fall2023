@@ -15,7 +15,7 @@ export default function UserList() {
   useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal
-    const jwt = auth.isAuthenticated();
+    const jwt = auth.tryToGetToken();
     const token = jwt.token;
     list(token, signal).then((data) => {
       if (data && data.error) {
@@ -33,8 +33,6 @@ export default function UserList() {
 
   return (
     <>
-
-    <NavigationBar />
     <Box sx={{textAlign:'center'}}>
       <h1 style={{color:'orange'}}> Complete User List</h1>
       <UserListComponent userList={userList}/>
