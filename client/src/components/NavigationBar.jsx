@@ -1,7 +1,7 @@
 // taken and modified from https://mui.com/material-ui/react-app-bar/
 
 import * as React from 'react';
-import { Link, Redirect } from 'react-router-dom/cjs/react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom/cjs/react-router-dom';
 
 //material-ui stuff
 import AppBar from '@mui/material/AppBar';
@@ -23,10 +23,11 @@ import gokturkLogo from './../../assets/images/gokturk_logo.jpg';
 
 
 
-function NavigationBar({currentStatus, changeLogStatus}) {
+function NavigationBar(props){
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [loggedIn, setLoggedIn] = useState(currentStatus);
+  const [loggedIn, setLoggedIn] = useState(props.currentStatus);
 
 
   const handleOpenNavMenu = (event) => {
@@ -72,7 +73,7 @@ function NavigationBar({currentStatus, changeLogStatus}) {
   const logOut = () => {
     auth.clearJWT(
       () => {
-        changeLogStatus(false)
+        props.changeLogStatus(false)
         setHasLoggedOut(true)
       }
     );
@@ -81,6 +82,37 @@ function NavigationBar({currentStatus, changeLogStatus}) {
   if (hasLoggedOut) {
     return (<Redirect to="./" />)
   }
+
+  const getButtonStyle = (pathname) =>
+  {
+    const isPage = currentPage == pathname 
+    
+    if(!isPage){return unselectedButtonStyle}
+
+    console.log(pathname)
+    return selectedButtonStyle
+  }
+
+  const currentPage = useLocation().pathname;
+  console.log(currentPage)
+  console.log(locationsDict["User List"])
+  console.log(currentPage == locationsDict["User List"])
+
+  const unselectedButtonStyle = {
+    my: 2, color: 'black', display: 'block',
+    backgroundColor: 'white',
+    '&:hover': {
+      backgroundColor: 'black',
+      color: 'white'
+    }
+  };
+
+  const selectedButtonStyle = {
+    my: 2, 
+    color: 'white', 
+    display: 'block',
+    backgroundColor: 'orange'
+  };
 
   const getTopInfo = () => {
     if(loggedIn){
@@ -167,17 +199,12 @@ function NavigationBar({currentStatus, changeLogStatus}) {
       <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
         {pages.map((page) => (
           <Button
+
             key={page}
             onClick={handleCloseNavMenu}
             component={Link} to={locationsDict[page]}
-            sx={{
-              my: 2, color: 'black', display: 'block',
-              backgroundColor: 'white',
-              '&:hover': {
-                backgroundColor: 'black',
-                color: 'white'
+            sx={getButtonStyle(locationsDict[page])
               }
-            }}
           >
             {page}
           </Button>
