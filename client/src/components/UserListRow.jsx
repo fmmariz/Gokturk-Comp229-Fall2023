@@ -24,7 +24,7 @@ function UserListRow({user}) {
     
     return (
         <Card  style={listObjectStyle}>
-          <Link to={'/users/'+user._id}>
+          <Link to={'/users/'+ user._id}>
           <CardContent style={{alignItems:'center', justifyContent:'center', textAlign:'center', padding:1}} >
                 <h5 style={nameStyle}>{user.name}</h5>
                 <h6 style={emailStyle}>{user.email}</h6>
