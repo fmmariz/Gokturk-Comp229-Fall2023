@@ -39,10 +39,10 @@ export default function ProductsList() {
 }, [])
 
 const history = useHistory();
-const handleEditProduct = (productId) => {
-  // Redirect to the EditProduct component with the product ID
-  history.push(`/editProduct/${productId}`);
-};
+// const handleEditProduct = (productId) => {
+//   // Redirect to the EditProduct component with the product ID
+//   history.push(`/editProduct/${productId}`);
+// };
 
 const AddButton = {
   background: 'white',
@@ -79,9 +79,9 @@ const AddButton = {
                 <h5>Color: {product.color}</h5>
                 <h5>Description: {product.description}</h5>
               </CardContent>
-              {/* <Link to='/editProduct'> */}
-                <Button onClick={() => handleEditProduct(product._id)}>Edit Product</Button>
-              {/* </Link> */}
+              <Link to={'editProduct/' + product._id}>
+                <Button >Edit Product</Button>
+              </Link>
             </Card>
           )}
       </div>
@@ -89,7 +89,7 @@ const AddButton = {
   )
 }
 
-
+// onClick={() => handleEditProduct(product._id)}
 // <ul style={listStyle}>
 //   {productData.map((product) =>
 //           <Card style={listObjectStyle}>
