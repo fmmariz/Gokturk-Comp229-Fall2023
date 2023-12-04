@@ -12,6 +12,9 @@ const DB = process.env.DATABASE.replace(
 
 mongoose.set('strictQuery', false);
 
+
+
+
 (async () => {
 	try {
 		const con = await mongoose.connect(DB, {
