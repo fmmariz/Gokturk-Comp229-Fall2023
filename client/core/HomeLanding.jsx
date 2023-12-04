@@ -5,11 +5,11 @@ import { useState, useEffect } from 'react';
 import { list } from '../user/api-user';
 import { Link } from 'react-router-dom/cjs/react-router-dom.js';
 import auth from '../auth/auth-helper';
-import UserListRow from '../src/components/UserListRow.jsx';
 import UserListComponent from '../src/components/UserListComponent.jsx';
+import ProductListComponent from '../src/components/ProductListComponent.jsx';
 import gokturkLogo from './../assets/images/gokturk_logo.jpg';
 import car from './../assets/images/car.png';
-
+import { productList } from '../product/api-product.js';
 
 export default function Home() {
     document.title = "Welcome to Gokturks"
@@ -100,25 +100,32 @@ export default function Home() {
 
 
     let [userList, setUserList] = useState([]);
+    let [productsList, setProductList] = useState([]);
 
     useEffect(() => {
         if (loggedIn) {
-
-        }
-        const abortController = new AbortController()
-        const signal = abortController.signal
-        const jwt = auth.tryToGetToken();
-        const token = jwt.token;
-        list(token, signal).then((data) => {
-            if (data && data.error) {
-                console.log(data.error)
-            } else {
-                //Fill with obtained Users
-                setUserList(data.data.doc);
+            const abortController = new AbortController()
+            const signal = abortController.signal
+            const jwt = auth.tryToGetToken();
+            const token = jwt.token;
+            list(token, signal).then((data) => {
+                if (data && data.error) {
+                    console.log(data.error)
+                } else {
+                    //Fill with obtained Users
+                    setUserList(data.data.doc);
+                }
+            })
+            productList(token, signal).then((data) => {
+                if (data && data.error) {
+                    console.log(data.error)
+                } else {
+                    setProductList(data.data.doc);
+                }
+            })
+            return function cleanup() {
+                abortController.abort()
             }
-        })
-        return function cleanup() {
-            abortController.abort()
         }
     }, [])
 
@@ -150,6 +157,7 @@ export default function Home() {
         if (loggedIn) {
             return (<>
                 <h1 style={{ color: 'orange' }}> Recent Products</h1>
+                <ProductListComponent productList={productsList} />
 
             </>)
         } else {
