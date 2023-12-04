@@ -65,4 +65,20 @@ const productList = async (credentials, signal) => {
       console.log(err)
     }
   }
-  export { productList, createProduct, updateProduct, readProduct };
+
+  const removeProduct = async (params, credentials) => {
+    try {
+      let response = await fetch('/api/v1/products/' + params, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + credentials
+        }
+      })
+      return await response.json()
+    } catch(err) {
+      console.log(err)
+    }
+  }
+  export { productList, createProduct, updateProduct, readProduct, removeProduct};

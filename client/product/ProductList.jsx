@@ -61,7 +61,6 @@ const AddButton = {
       <Link to='/addProduct'>
         <Button style={AddButton}>Add a new Product</Button>
       </Link>
-      <h6>Product List</h6>
       <div style={{display: 'flex', justifyContent: 'space-around', flexWrap: "wrap"}} >
           {productData.map((product) => 
             <Card style={{marginTop: '2em', marginRight: '2em'}}>
@@ -81,6 +80,9 @@ const AddButton = {
               </CardContent>
               <Link to={'editProduct/' + product._id}>
                 <Button >Edit Product</Button>
+              </Link>
+              <Link to={'deleteProduct/' + product._id}>
+                <Button >Delete Product</Button>
               </Link>
             </Card>
           )}

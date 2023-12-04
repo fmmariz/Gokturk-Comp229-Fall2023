@@ -14,6 +14,7 @@ import DeleteUser from '../user/DeleteUser';
 import OtherUserProfile from '../user/OtherUserProfile';
 import auth from '../auth/auth-helper';
 import EditProduct from '../product/EditProduct';
+import DeleteProduct from '../product/DeleteProduct';
 
 function MainRouter(props){
 
@@ -29,6 +30,7 @@ function MainRouter(props){
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/listproducts' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={ProductsList} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/addProduct' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={AddProduct} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/editProduct/:id' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={EditProduct} />
+      <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/deleteProduct/:id' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={DeleteProduct} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/profile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={Profile} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/editprofile' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={EditProfile} />
       <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/deleteaccount' accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={DeleteUser} />
