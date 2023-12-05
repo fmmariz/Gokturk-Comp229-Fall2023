@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-  
+const { PORT = 3000 } = process.env;
 export default defineConfig({
   plugins: [react({
     jsxRuntime: 'classic' // Add this line
@@ -9,13 +9,13 @@ export default defineConfig({
 server: {
   proxy: {
     '/api': {
-      target: `http://localhost:3000`,
+      target: `http://localhost:${PORT}`,
       changeOrigin: true,
       secure: false
     },
   },
 },
   build: {
-    outDir: '../dist/app'
+    outDir: '../../dist/app'
   },
 });

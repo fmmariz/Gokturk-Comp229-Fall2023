@@ -17,13 +17,12 @@
     "nodemon": "^3.0.1"
   },
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server" : "npm run client",
-    "client" : "npm run server",
+    "dev": "concurrently 'vite' \"nodemon server.js\"",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "type": "module",
   "name": "Gokturk",
   "version": "1.0.0",
   "description": "Project for COMP229 GROUP 6",

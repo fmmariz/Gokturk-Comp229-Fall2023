@@ -1,11 +1,15 @@
 
 
+const path = require('path')
 const express = require('express');
 const GlobalError = require('./controller/errorController');
 const app = express();
 const userRouter = require('./routes/userRoutes');
 const AppError = require('./utils/appError');
 const productRouter = require('./routes/productRoutes');
+const CURRENT_WORKING_DIR = process.cwd()
+
+app.use(express.static(path.join(CURRENT_WORKING_DIR, "dist/app")));
 
 
 if (process.env.NODE_ENV == 'development') {
