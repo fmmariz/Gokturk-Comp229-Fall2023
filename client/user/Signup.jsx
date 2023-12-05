@@ -8,7 +8,6 @@ import { signin } from '../auth/api-auth.js'
 import auth from '../auth/auth-helper.js'
 
 import { Link } from 'react-router-dom'
-import NavigationBar from '../src/components/NavigationBar.jsx'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min.js'
 
 export default function SignUp({changeLogStatus}) {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Home from '../core/HomeLanding'
-import NavigationBar from './components/NavigationBar'
 import SignIn from '../auth/SignIn';
 import UserList from '../user/UserList';
 import ProductsList from '../product/ProductList';
@@ -11,10 +10,9 @@ import Profile from '../user/Profile';
 import EditProfile from '../user/EditProfile';
 import DeleteUser from '../user/DeleteUser';
 import OtherUserProfile from '../user/OtherUserProfile';
-import auth from '../auth/auth-helper';
 import EditProduct from '../product/EditProduct';
 import DeleteProduct from '../product/DeleteProduct';
-import SignUp from '../user/SignUp';
+import SignUp from './../user/SignUp';
 
 function MainRouter(props){
 
