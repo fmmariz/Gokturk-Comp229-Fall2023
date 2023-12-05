@@ -26,7 +26,7 @@
   "name": "Gokturk",
   "version": "1.0.0",
   "description": "Project for COMP229 GROUP 6",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/fmmariz/Gokturk-Comp229-Fall2023.git",
   "author": "GROUP 6",
   "license": "MIT"
