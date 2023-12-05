@@ -12,7 +12,7 @@ import DeleteUser from '../user/DeleteUser';
 import OtherUserProfile from '../user/OtherUserProfile';
 import EditProduct from '../product/EditProduct';
 import DeleteProduct from '../product/DeleteProduct';
-// import SignUp from '../user/SignUp';
+import SignUp from '../user/SignUp';
 
 function MainRouter(props) {
 
@@ -32,7 +32,7 @@ function MainRouter(props) {
         <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path="/users/:id" accessibleIfLoggedIn={false} pathToReroute={'/signin'} component={OtherUserProfile} />
 
         <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/signin' accessibleIfLoggedIn={true} pathToReroute={'/'} component={SignIn} />
-        {/* <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/signup' accessibleIfLoggedIn={true} pathToReroute={'/'} component={SignUp} /> */}
+        <ReroutingRoutes currentStatus={props.currentStatus} changeLogStatus={props.changeLogStatus} exact path='/signup' accessibleIfLoggedIn={true} pathToReroute={'/'} component={SignUp} />
 
       </Switch>
     </>
