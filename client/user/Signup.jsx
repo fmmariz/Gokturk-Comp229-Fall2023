@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import NavigationBar from '../src/components/NavigationBar.jsx'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min.js'
 
-export default function Signup({changeLogStatus}) {
+export default function SignUp({changeLogStatus}) {
   const [values, setValues] = useState({
     name: '',
     email: '',
