@@ -22,7 +22,6 @@
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "type": "module",
   "name": "Gokturk",
   "version": "1.0.0",
   "description": "Project for COMP229 GROUP 6",
