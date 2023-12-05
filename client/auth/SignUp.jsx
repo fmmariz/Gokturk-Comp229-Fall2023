@@ -3,9 +3,9 @@ import {Card, CardActions, CardContent,
   Button, TextField,Dialog, DialogActions,
 DialogContent,DialogContentText,DialogTitle,
 Box} from '@mui/material'
-import { create } from './api-user.js'
-import { signin } from '../auth/api-auth.js'
-import auth from '../auth/auth-helper.js'
+import { create } from '../user/api-user.js'
+import { signin } from './api-auth.js'
+import auth from './auth-helper.js'
 
 import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min.js'
