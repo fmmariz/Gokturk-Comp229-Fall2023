@@ -1,10 +1,8 @@
 import { list } from './api-user.js'
 import { useEffect, useState } from "react";
 import React from 'react';
-import { Card, CardContent, Box } from '@material-ui/core';
-import NavigationBar from '../src/components/NavigationBar.jsx';
+import {  Box } from '@material-ui/core';
 import auth from '../auth/auth-helper.js';
-import UserListRow from '../src/components/UserListRow.jsx';
 import UserListComponent from '../src/components/UserListComponent.jsx';
 
 export default function UserList() {
